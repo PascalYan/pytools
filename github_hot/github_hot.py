@@ -701,7 +701,7 @@ class ConfluencePublisher(ArticlePublisher):
             raise ValueError("Confluence配置未设置")
             
         self.headers = {
-            'Authorization': f'Basic {self.api_token}',
+            'Authorization': f'Bearer {self.api_token}',
             'Content-Type': 'application/json'
         }
         logger.info("Confluence发布器初始化完成")
@@ -727,6 +727,7 @@ class ConfluencePublisher(ArticlePublisher):
             # 发布文章
             url = f"{self.base_url}/rest/api/content"
             response = requests.post(url, headers=self.headers, json=data)
+            logger.debug(f"confluence 发布文章，请求url：{url}，返回结果：{response}");
             response_json = response.json()
             
             if response.status_code not in [200, 201]:
