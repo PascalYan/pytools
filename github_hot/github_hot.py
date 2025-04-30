@@ -8,7 +8,12 @@ from wechatpy.client.api import WeChatMedia
 import logging
 import traceback
 import json
+import base64
 from abc import ABC, abstractmethod
+import hashlib
+import random
+import html
+import markdown
 
 # 配置日志
 logging.basicConfig(
@@ -19,6 +24,28 @@ logger = logging.getLogger(__name__)
 
 # 加载环境变量
 load_dotenv()
+
+class FreeTranslator:
+    """免费无需配置的翻译服务（基于 googletrans 包）"""
+    def __init__(self):
+        try:
+            from googletrans import Translator
+            self.translator = Translator()
+            self.enabled = True
+            logger.info("免费翻译服务（googletrans）初始化完成")
+        except ImportError:
+            logger.warning("未安装 googletrans 包，将跳过翻译功能。请运行 pip install googletrans==4.0.0-rc1")
+            self.enabled = False
+
+    def translate(self, text, from_lang='en', to_lang='zh-cn'):
+        if not self.enabled or not text:
+            return text
+        try:
+            result = self.translator.translate(text, src=from_lang, dest=to_lang)
+            return result.text
+        except Exception as e:
+            logger.warning(f"免费翻译失败: {e}")
+            return text
 
 class ArticlePublisher(ABC):
     """文章发布基类"""
@@ -498,7 +525,11 @@ class GitHubHotCrawler:
     """GitHub热门仓库爬虫"""
     def __init__(self):
         self.github_token = os.getenv('GITHUB_TOKEN')
-        self.language = os.getenv('GITHUB_LANGUAGE', '')  # 空字符串表示所有语言
+        # 处理语言配置，移除注释部分
+        language = os.getenv('GITHUB_LANGUAGE', '')
+        if language and '#' in language:
+            language = language.split('#')[0].strip()
+        self.language = language  # 空字符串表示所有语言
         self.since = os.getenv('GITHUB_SINCE', 'weekly')
         self.limit = int(os.getenv('GITHUB_LIMIT', '10'))
         
@@ -534,6 +565,113 @@ class GitHubHotCrawler:
         start_date = end_date - timedelta(days=days)
         return start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d')
     
+    def get_repo_details(self, owner, repo):
+        """获取仓库详细信息
+        
+        Args:
+            owner: 仓库所有者
+            repo: 仓库名称
+            
+        Returns:
+            dict: 仓库详细信息
+        """
+        try:
+            # 获取仓库基本信息
+            repo_url = f"https://api.github.com/repos/{owner}/{repo}"
+            try:
+                response = requests.get(repo_url, headers=self.headers, timeout=10)
+            except requests.exceptions.RequestException as e:
+                logger.error(f"请求仓库 {owner}/{repo} 基本信息时发生网络错误: {str(e)}")
+                return {}
+                
+            if response is None or response.status_code != 200:
+                logger.warning(f"获取仓库 {owner}/{repo} 信息失败: {response.status_code if response else 'None response'}")
+                return {}
+            
+            try:
+                repo_info = response.json()
+            except Exception as e:
+                logger.warning(f"解析仓库 {owner}/{repo} 信息失败: {str(e)}")
+                return {}
+                
+            if not isinstance(repo_info, dict):
+                logger.warning(f"获取仓库 {owner}/{repo} 信息格式错误")
+                return {}
+            
+            # 获取 README 内容
+            readme_url = f"https://api.github.com/repos/{owner}/{repo}/readme"
+            try:
+                readme_response = requests.get(readme_url, headers=self.headers, timeout=10)
+            except requests.exceptions.RequestException as e:
+                logger.error(f"请求仓库 {owner}/{repo} README 时发生网络错误: {str(e)}")
+                readme_response = None
+                
+            readme_content = ""
+            if readme_response is not None and readme_response.status_code == 200:
+                try:
+                    readme_data = readme_response.json()
+                    if isinstance(readme_data, dict) and 'content' in readme_data:
+                        try:
+                            readme_content = base64.b64decode(readme_data['content']).decode('utf-8')
+                            # 只取前500个字符作为简介
+                            readme_content = readme_content[:500] + "..." if len(readme_content) > 500 else readme_content
+                        except Exception as e:
+                            logger.warning(f"解码 README 内容失败: {str(e)}")
+                except Exception as e:
+                    logger.warning(f"解析 README 数据失败: {str(e)}")
+            
+            # 获取贡献者信息
+            contributors_url = f"https://api.github.com/repos/{owner}/{repo}/contributors"
+            try:
+                contributors_response = requests.get(contributors_url, headers=self.headers, timeout=10)
+            except requests.exceptions.RequestException as e:
+                logger.error(f"请求仓库 {owner}/{repo} 贡献者信息时发生网络错误: {str(e)}")
+                contributors_response = None
+                
+            contributors = []
+            if contributors_response is not None and contributors_response.status_code == 200:
+                try:
+                    contributors_data = contributors_response.json()
+                    if isinstance(contributors_data, list):
+                        for contributor in contributors_data[:5]:  # 只取前5个贡献者
+                            if isinstance(contributor, dict) and 'login' in contributor:
+                                contributors.append(contributor['login'])
+                except Exception as e:
+                    logger.warning(f"解析贡献者数据失败: {str(e)}")
+            
+            # 获取最近更新时间
+            updated_at_str = ""
+            if isinstance(repo_info, dict) and 'updated_at' in repo_info and repo_info['updated_at']:
+                try:
+                    updated_at = datetime.strptime(repo_info['updated_at'], '%Y-%m-%dT%H:%M:%SZ')
+                    updated_at_str = updated_at.strftime('%Y-%m-%d %H:%M:%S')
+                except Exception as e:
+                    logger.warning(f"解析更新时间失败: {str(e)}")
+            
+            # 安全地获取其他信息
+            description = repo_info.get('description', '') if isinstance(repo_info, dict) else ''
+            license_name = repo_info.get('license', {}).get('name', '') if isinstance(repo_info, dict) else ''
+            topics = repo_info.get('topics', []) if isinstance(repo_info, dict) else []
+            homepage = repo_info.get('homepage', '') if isinstance(repo_info, dict) else ''
+            open_issues = repo_info.get('open_issues', 0) if isinstance(repo_info, dict) else 0
+            watchers = repo_info.get('watchers', 0) if isinstance(repo_info, dict) else 0
+            
+            return {
+                'description': description,
+                'readme': readme_content,
+                'contributors': contributors,
+                'updated_at': updated_at_str,
+                'license': license_name,
+                'topics': topics,
+                'homepage': homepage,
+                'open_issues': open_issues,
+                'watchers': watchers
+            }
+            
+        except Exception as e:
+            logger.error(f"获取仓库 {owner}/{repo} 详细信息时出错: {str(e)}")
+            return {}
+    
     def get_trending_repos(self):
         """从GitHub Trending页面获取热门仓库"""
         logger.info(f"开始获取{self.language or '所有语言'}的{self.since}热门仓库...")
@@ -541,58 +679,91 @@ class GitHubHotCrawler:
         # 构建Trending页面URL
         url = self.get_trending_url()
         
-        # 发送请求获取页面内容
-        response = requests.get(url, headers=self.headers)
-        if response.status_code != 200:
-            logger.error(f"获取GitHub Trending页面失败: {response.status_code}")
-            raise Exception(f"获取GitHub Trending页面失败: {response.status_code}")
-        
-        # 解析页面内容
-        soup = BeautifulSoup(response.text, 'html.parser')
-        repos = []
-        
-        # 查找所有仓库条目
-        repo_items = soup.select('article.Box-row')
-        for item in repo_items[:self.limit]:
-            try:
-                # 获取仓库名称和URL
-                repo_link = item.select_one('h2 a')
-                repo_name = repo_link['href'].strip('/')
-                repo_url = f"https://github.com/{repo_name}"
-                
-                # 获取仓库描述
-                description = item.select_one('p')
-                description = description.text.strip() if description else ''
-                
-                # 获取语言
-                language = item.select_one('span[itemprop="programmingLanguage"]')
-                language = language.text.strip() if language else self.language or 'Unknown'
-                
-                # 获取星标数
-                stars = item.select_one('a[href$="/stargazers"]')
-                stars = int(stars.text.strip().replace(',', '')) if stars else 0
-                
-                # 获取Fork数
-                forks = item.select_one('a[href$="/forks"]')
-                forks = int(forks.text.strip().replace(',', '')) if forks else 0
-                
-                repo_info = {
-                    'name': repo_name,
-                    'description': description,
-                    'stars': stars,
-                    'forks': forks,
-                    'url': repo_url,
-                    'language': language
-                }
-                repos.append(repo_info)
-                logger.info(f"已获取仓库: {repo_info['name']}")
-                
-            except Exception as e:
-                logger.error(f"解析仓库信息时出错: {str(e)}")
-                continue
-        
-        logger.info(f"成功获取{len(repos)}个热门仓库")
-        return repos
+        try:
+            # 发送请求获取页面内容
+            response = requests.get(url, headers=self.headers, timeout=10)
+            if response.status_code != 200:
+                logger.error(f"获取GitHub Trending页面失败: {response.status_code}")
+                raise Exception(f"获取GitHub Trending页面失败: {response.status_code}")
+            
+            # 解析页面内容
+            soup = BeautifulSoup(response.text, 'html.parser')
+            repos = []
+            
+            # 查找所有仓库条目
+            repo_items = soup.select('article.Box-row')
+            if not repo_items:
+                logger.warning("未找到任何仓库条目，可能是页面结构发生变化")
+                return []
+            
+            for item in repo_items[:self.limit]:
+                try:
+                    # 获取仓库名称和URL
+                    repo_link = item.select_one('h2 a')
+                    if not repo_link or 'href' not in repo_link.attrs:
+                        logger.warning("未找到有效的仓库链接")
+                        continue
+                        
+                    repo_name = repo_link['href'].strip('/')
+                    if '/' not in repo_name:
+                        logger.warning(f"无效的仓库名称格式: {repo_name}")
+                        continue
+                        
+                    owner, repo = repo_name.split('/')
+                    repo_url = f"https://github.com/{repo_name}"
+                    
+                    # 获取仓库描述
+                    description = item.select_one('p')
+                    description = description.text.strip() if description else ''
+                    
+                    # 获取语言
+                    language = item.select_one('span[itemprop="programmingLanguage"]')
+                    language = language.text.strip() if language else self.language or 'Unknown'
+                    
+                    # 获取星标数
+                    stars = item.select_one('a[href$="/stargazers"]')
+                    try:
+                        stars = int(stars.text.strip().replace(',', '')) if stars else 0
+                    except (ValueError, AttributeError):
+                        stars = 0
+                        logger.warning(f"解析星标数失败: {repo_name}")
+                    
+                    # 获取Fork数
+                    forks = item.select_one('a[href$="/forks"]')
+                    try:
+                        forks = int(forks.text.strip().replace(',', '')) if forks else 0
+                    except (ValueError, AttributeError):
+                        forks = 0
+                        logger.warning(f"解析Fork数失败: {repo_name}")
+                    
+                    # 获取仓库详细信息
+                    details = self.get_repo_details(owner, repo)
+                    
+                    repo_info = {
+                        'name': repo_name,
+                        'description': description or details.get('description', ''),
+                        'stars': stars,
+                        'forks': forks,
+                        'url': repo_url,
+                        'language': language,
+                        'details': details
+                    }
+                    repos.append(repo_info)
+                    logger.info(f"已获取仓库: {repo_info['name']}")
+                    
+                except Exception as e:
+                    logger.error(f"解析仓库信息时出错: {str(e)}")
+                    continue
+            
+            logger.info(f"成功获取{len(repos)}个热门仓库")
+            return repos
+            
+        except requests.exceptions.RequestException as e:
+            logger.error(f"请求GitHub Trending页面时发生网络错误: {str(e)}")
+            raise
+        except Exception as e:
+            logger.error(f"获取热门仓库时发生错误: {str(e)}")
+            raise
     
     def get_trending_url(self):
         """获取GitHub Trending页面的URL"""
@@ -624,25 +795,26 @@ class GitHubHotCrawler:
 class ArticleGenerator:
     """文章生成器"""
     def __init__(self):
-        self.template = """
-<h1>{title}</h1>
-
-<p>本{report_type}为大家带来 GitHub 上最受欢迎的 {language} 项目，这些项目在{time_range}获得了最多的 stars。</p>
-
-{content}
-
-<h2>项目详情</h2>
-
-{details}
-
-<hr/>
-<p><em>数据统计时间：{time_range}</em></p>
-"""
+        self.translator = FreeTranslator()
         logger.info("文章生成器初始化完成")
     
+    def translate_content(self, text):
+        """翻译内容，保留原文和译文（Markdown 格式）
+        Args:
+            text: 要翻译的文本
+        Returns:
+            str: 包含原文和译文的 Markdown
+        """
+        if not text:
+            return ""
+        translated = self.translator.translate(text)
+        if not translated or translated == text:
+            return text
+        # 原文和译文分两行，译文用 > blockquote
+        return f"{text}\n> {translated}"
+
     def generate_article(self, repos, language='Python', crawler=None, title=None):
-        """生成文章内容
-        
+        """生成文章内容（Markdown 格式）
         Args:
             repos: 仓库列表
             language: 编程语言
@@ -650,43 +822,56 @@ class ArticleGenerator:
             title: 文章标题，如果提供则在文章开头显示
         """
         logger.info("开始生成文章...")
-        
-        # 获取时间范围
         if crawler:
             time_range = crawler.get_time_range_text()
+            report_type = crawler.get_report_type_text()
         else:
-            time_range = '过去7天内'  # 默认为周报
+            time_range = '过去7天内'
+            report_type = '周报'
         
-        # 生成项目列表
-        content = "<ol>"
-        details = ""
+        # 标题
+        md = f"# {title or ''}\n\n"
+        md += f"本{report_type}为大家带来 GitHub 上最受欢迎的 {language} 项目，这些项目在{time_range}获得了最多的 stars。\n\n"
         
+        # 热门项目列表
+        md += "## 热门项目列表\n"
         for i, repo in enumerate(repos, 1):
-            content += f'<li><a href="{repo["url"]}">{repo["name"]}</a> - {repo["description"]}</li>'
-            details += f"""
-<h3>{i}. {repo['name']}</h3>
-
-<ul>
-<li>描述：{repo['description']}</li>
-<li>星标数：{repo['stars']}</li>
-<li>Fork数：{repo['forks']}</li>
-<li>主要语言：{repo['language']}</li>
-<li>项目地址：<a href="{repo['url']}">{repo['url']}</a></li>
-</ul>
-"""
+            desc = self.translate_content(repo["description"])
+            md += f"{i}. [{repo['name']}]({repo['url']}) - {desc}\n"
+        md += "\n"
         
-        content += "</ol>"
-        
-        article = self.template.format(
-            title=title or "",
-            language=language,
-            report_type=crawler.get_report_type_text() if crawler else '周报',
-            time_range=time_range,
-            content=content,
-            details=details
-        )
+        # 项目详情
+        md += "## 项目详情\n"
+        for i, repo in enumerate(repos, 1):
+            md += f"### {i}. {repo['name']}\n"
+            md += f"- **描述**: {self.translate_content(repo['description'])}\n"
+            md += f"- **星标数**: {repo['stars']}\n"
+            md += f"- **Fork数**: {repo['forks']}\n"
+            md += f"- **主要语言**: {repo['language']}\n"
+            md += f"- **项目地址**: [{repo['url']}]({repo['url']})\n"
+            details_data = repo.get('details', {})
+            if details_data.get('readme'):
+                md += f"- **项目简介**: {self.translate_content(details_data['readme'])}\n"
+            if details_data.get('contributors'):
+                contributors = ', '.join([f"[{c}](https://github.com/{c})" for c in details_data['contributors']])
+                md += f"- **主要贡献者**: {contributors}\n"
+            if details_data.get('updated_at'):
+                md += f"- **最近更新**: {details_data['updated_at']}\n"
+            if details_data.get('license'):
+                md += f"- **许可证**: {details_data['license']}\n"
+            if details_data.get('topics'):
+                topics = ', '.join(details_data['topics'])
+                md += f"- **主题标签**: {topics}\n"
+            if details_data.get('homepage'):
+                md += f"- **项目主页**: [{details_data['homepage']}]({details_data['homepage']})\n"
+            if details_data.get('open_issues'):
+                md += f"- **开放问题**: {details_data['open_issues']}\n"
+            if details_data.get('watchers'):
+                md += f"- **关注者**: {details_data['watchers']}\n"
+            md += "\n"
+        md += f"---\n数据统计时间：{time_range}\n"
         logger.info("文章生成完成")
-        return article
+        return md
 
 class ConfluencePublisher(ArticlePublisher):
     def __init__(self):
@@ -700,45 +885,58 @@ class ConfluencePublisher(ArticlePublisher):
             logger.error("Confluence配置未设置！请在.env文件中设置相关配置")
             raise ValueError("Confluence配置未设置")
             
-        self.headers = {
-            'Authorization': f'Bearer {self.api_token}',
-            'Content-Type': 'application/json'
-        }
-        logger.info("Confluence发布器初始化完成")
+        try:
+            from atlassian import Confluence
+            # 修改认证方式，使用 token 而不是密码
+            self.confluence = Confluence(
+                url=self.base_url,
+                username=self.username,
+                token=self.api_token,  # 使用 token 而不是 password
+                cloud=False  # 如果是自托管的 Confluence，设置为 False
+            )
+            logger.info("Confluence发布器初始化完成")
+        except ImportError:
+            logger.error("请先安装 atlassian-python-api: pip install atlassian-python-api")
+            raise
+        except Exception as e:
+            logger.error(f"初始化Confluence客户端失败: {str(e)}")
+            raise
     
+    def markdown_to_confluence_xhtml(self, md_text):
+        """将 Markdown 转为 Confluence Storage Format (XHTML) 支持的简单标签"""
+        # 先转为 HTML
+        html = markdown.markdown(md_text)
+        # 只保留 Confluence 支持的标签
+        allowed_tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'ol', 'li', 'a', 'img', 'strong', 'em', 'table', 'tr', 'td', 'th', 'tbody', 'thead', 'tfoot', 'br']
+        soup = BeautifulSoup(html, 'html.parser')
+        for tag in soup.find_all(True):
+            if tag.name not in allowed_tags:
+                tag.unwrap()
+            else:
+                tag.attrs = {k: v for k, v in tag.attrs.items() if k in ['href', 'src', 'alt', 'title']}
+        return str(soup)
+
     def publish(self, title, content):
-        """发布文章到Confluence"""
+        """发布文章到Confluence，自动将 Markdown 转为 Storage Format"""
         logger.info("开始发布文章到Confluence...")
         try:
-            # 构建文章数据
-            data = {
-                "type": "page",
-                "title": title,
-                "space": {"key": self.space_key},
-                "ancestors": [{"id": self.parent_page_id}],
-                "body": {
-                    "storage": {
-                        "value": content,
-                        "representation": "storage"
-                    }
-                }
-            }
-            
-            # 发布文章
-            url = f"{self.base_url}/rest/api/content"
-            response = requests.post(url, headers=self.headers, json=data)
-            logger.debug(f"confluence 发布文章，请求url：{url}，返回结果：{response}");
-            response_json = response.json()
-            
-            if response.status_code not in [200, 201]:
-                logger.error(f"发布文章到Confluence失败: {response.text}")
-                raise Exception(f"发布文章到Confluence失败: {response.status_code}")
-            
-            # 获取文章URL
-            article_url = f"{self.base_url}/pages/viewpage.action?pageId={response_json['id']}"
+            # 转换 Markdown 为 Confluence Storage Format
+            confluence_content = self.markdown_to_confluence_xhtml(content)
+            # 构建页面标题
+            page_title = f"{title} {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            # 创建页面
+            result = self.confluence.create_page(
+                space=self.space_key,
+                title=page_title,
+                body=confluence_content,
+                parent_id=self.parent_page_id,
+                representation='storage'
+            )
+            if not result:
+                raise Exception("创建页面失败")
+            article_url = f"{self.base_url}/pages/viewpage.action?pageId={result['id']}"
             logger.info(f"文章发布成功，URL: {article_url}")
             return article_url
-            
         except Exception as e:
             logger.error(f"发布文章到Confluence时发生错误: {str(e)}")
             raise
@@ -872,7 +1070,7 @@ def main():
         webhook_publisher = None
         
         # 先发布到其他平台（带标题）
-        article_with_title = generator.generate_article(
+        article = generator.generate_article(
             repos,
             language=language_text,
             crawler=crawler,
@@ -885,7 +1083,7 @@ def main():
                 continue
                 
             try:
-                url = publisher.publish(title, article_with_title)
+                url = publisher.publish(title, article)
                 if url:
                     # 根据发布器类型存储URL
                     if isinstance(publisher, CSDNPublisher):
