@@ -1,0 +1,9 @@
+requests==2.32.3
+beautifulsoup4==4.12.3
+langchain-community==0.3.23
+langchain-openai==0.3.14
+openai==1.76.2
+python-dotenv==1.0.1
+atlassian-python-api==3.41.0
+wechatpy==2.0.0a26
+markdown==3.6

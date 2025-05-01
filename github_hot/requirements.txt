@@ -1,9 +1,0 @@
-requests>=2.31.0
-beautifulsoup4>=4.12.0
-python-dotenv>=1.0.0
-wechatpy>=1.8.18
-atlassian-python-api>=3.41.0
-lxml>=4.9.0  # 用于 BeautifulSoup 的解析器
-cryptography==41.0.7
-googletrans==4.0.0-rc1
-markdown>=3.0.0 
