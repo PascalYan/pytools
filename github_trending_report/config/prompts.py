@@ -42,11 +42,11 @@ WEEKLY_TREADING_WECHAT = PromptTemplate(
 2. 【项目分类介绍】
    - 将项目归类为3-5个高度抽象的类别
    - 文章内容应当包含每周趋势项目列表所有项目
-   - 每个类别标题<p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">项目名称：（中文）一句话亮点</span></p>
+   - 每个类别标题<p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#3daad6">项目名称：（中文）一句话亮点</span></p>
    - <br>每个类别标题后空一行
    - 每个项目按以下模板编写：
      ```
-     <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">项目名称：一句话亮点</p>
+     <p style="color:#3daad6;font-weight:bold;font-size: 16px;">项目名称：一句话亮点</p>
      <p style="color:#888888; font-size: 15px;">star⭐️: 本周 xxk｜总 xxk</p>
      <p style="color:#888888; font-size: 15px;>项目地址：<br>URL</p>
      <p style="font-size: 16px;>[项目详细介绍]，（首行不缩进）文章的核心内容，描述项目的基本功能，结合项目相关国内外讨论信息，介绍项目原理，重点介绍技术的突破性、前瞻性等，或项目的应用前景、应用案例与价值等，使用通俗比喻解释技术难点，针对存在伦理或安全等争议的内容，需从正反等多维度分析重点进行描述，引爆文章话题。</p>
@@ -54,13 +54,13 @@ WEEKLY_TREADING_WECHAT = PromptTemplate(
      ```
 
 3. 【本周趋势洞察】
-   - 标题<p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">本周趋势洞察</span></p>
+   - 标题<p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#3daad6">本周趋势洞察</span></p>
    - <br>标题后空一行
    - 内容<p style="font-size: 16px;>（首行不缩进）文章的核心内容，输出1000字以上本周趋势洞察，结合国内外相关信息进行深度分析，展现全球技术视野和前瞻性见解，需要具有前瞻性、引领性、专业性、准确性。</p>
    - <br>末尾空一行
    
 4. 【开发者建议】
-   - 标题<p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">开发者建议</span></p>
+   - 标题<p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#3daad6">开发者建议</span></p>
    - <br>标题后空一行
    - 内容<p style="font-size: 16px;>（首行不缩进）提供具体应用和学习建议，如何跟上本周技术趋势</p>
    - <br>末尾空一行
