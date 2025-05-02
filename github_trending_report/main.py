@@ -26,9 +26,9 @@ def main():
     # 1. 爬取GitHub趋势项目
     logger.info("正在爬取GitHub趋势项目...")
     from config.settings import GITHUB_TRENDING_SINCE, GITHUB_TRENDING_LANGUAGE
-    trending_repos = fetch_trending_repos(language=GITHUB_TRENDING_LANGUAGE, since=GITHUB_TRENDING_SINCE)
+    crawler_content = fetch_trending_repos(language=GITHUB_TRENDING_LANGUAGE, since=GITHUB_TRENDING_SINCE)
     
-    if not trending_repos:
+    if not crawler_content:
         logger.warning("未获取到趋势项目数据，流程终止")
         return
     
@@ -45,38 +45,38 @@ def main():
     generator = ArticleGenerator()
     
     # 检查并生成文章
-    for article_type in required_article_types:
-        article_file = DATA_DIR / f"{today}_{article_type}.text"
+    for article_prompt_template_name in required_article_types:
+        article_file = DATA_DIR / f"{today}_{GITHUB_TRENDING_SINCE}_{article_prompt_template_name}.text"
         
         # 如果文章已存在则跳过生成
         if article_file.exists():
-            logger.info(f"文章{article_type}已存在，跳过生成")
+            logger.info(f"文章{article_prompt_template_name}已存在，跳过生成")
             with open(article_file, "r", encoding="utf-8") as f:
-                articles[article_type] = f.read()
+                articles[article_prompt_template_name] = f.read()
             continue
             
         # 生成新文章
-        logger.info(f"生成文章{article_type}...")
-        articles.update(generator.generate_article(trending_repos, article_type))
+        logger.info(f"生成文章{article_prompt_template_name}...")
+        articles.update(generator.generate_article(crawler_content, article_prompt_template_name))
         
         # 保存生成的文章
-        logger.info(f"生成文章{article_type}生成完成，保存文章...")
+        logger.info(f"生成文章{article_prompt_template_name}生成完成，保存文章...")
         with open(article_file, "w", encoding="utf-8") as f:
-            f.write(articles[article_type])
+            f.write(articles[article_prompt_template_name])
     
     # 3. 发布文章
     logger.info("所有文章生成完成，正在发布文章到各平台...")
     
     # 按文章类型和渠道发布
-    for article_type, channels in ARTICLE_CHANNEL_MAPPING.items():
-        if article_type not in articles:
-            logger.warning(f"文章类型{article_type}未生成，跳过发布")
+    for article_prompt_template_name, channels in ARTICLE_CHANNEL_MAPPING.items():
+        if article_prompt_template_name not in articles:
+            logger.warning(f"文章类型{article_prompt_template_name}未生成，跳过发布")
             continue
             
-        logger.info(f"开始发布{article_type}到{', '.join(channels)}...")
+        logger.info(f"开始发布{article_prompt_template_name}到{', '.join(channels)}...")
         
         for channel in channels:
-            logger.info(f"正在发布{article_type}文章{channel}平台...")
+            logger.info(f"正在发布{article_prompt_template_name}文章{channel}平台...")
                
             try:
                 if channel == "wechat":
@@ -84,7 +84,7 @@ def main():
                     wechat_publisher = WeChatPublisher()
                     wechat_data = {
                         "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
-                        "content": articles[article_type],
+                        "content": articles[article_prompt_template_name],
                         # "digest": "每周精选GitHub热门项目技术分析"，不传，微信自动截取54个字作为摘要介绍
                     }
                     wechat_publisher.publish_article(wechat_data)
@@ -93,12 +93,12 @@ def main():
                     confluence_publisher = ConfluencePublisher()
                     confluence_data = {
                         "title": f"GitHub技术趋势分析({today})",
-                        "content": articles[article_type]
+                        "content": articles[article_prompt_template_name]
                     }
                     confluence_publisher.publish_article(confluence_data, space_key="TECH")
         
             except Exception as e:
-                logger.error(f"发布{article_type}到{channel}失败: {str(e)}")
+                logger.error(f"发布{article_prompt_template_name}到{channel}失败: {str(e)}")
     
     logger.info("GitHub技术趋势报告生成流程完成!")
 
