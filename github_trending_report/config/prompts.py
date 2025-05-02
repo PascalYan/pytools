@@ -35,7 +35,7 @@ WEEKLY_TREADING_WECHAT = PromptTemplate(
 0. 文章标题，提炼本周文章核心内容标题，具有阅读引导性。
 
 1. 【固定导语】(无标题)
-   - 开场白：<p style="font-size: 16px;>"GitHub Trends，Future Unfurls！本周GitHub又有哪些神仙项目霸榜热门？「码了个啥｜每周GitHub技术趋势」继续为您解读。"</p>
+   - 开场白：<p style="font-size: 16px;>"GitHub Trends，Future Unfurls！本周GitHub又有哪些神仙项目霸榜热门？「每周GitHub技术趋势」继续为您解读。"</p>
    - 内容概览：<p style="font-size: 16px;>（首行不缩进）1-2段总结本周核心内容，提炼3个关键词</p>
    - <br>末尾空一行
 

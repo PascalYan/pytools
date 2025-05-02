@@ -2,109 +2,109 @@
   {
     "name": "kortix-ai/suna",
     "description": "Suna - Open Source Generalist AI Agent",
-    "stars": "9328",
+    "stars": "9333",
     "weekly_stars": "6461",
     "language": "all",
     "url": "https://github.com/kortix-ai/suna",
-    "fetched_at": "2025-05-02T17:09:21.317759"
+    "fetched_at": "2025-05-02T18:11:16.951762"
   },
   {
     "name": "jujumilk3/leaked-system-prompts",
     "description": "Collection of leaked system prompts",
-    "stars": "5681",
+    "stars": "5688",
     "weekly_stars": "2985",
     "language": "all",
     "url": "https://github.com/jujumilk3/leaked-system-prompts",
-    "fetched_at": "2025-05-02T17:09:21.318018"
+    "fetched_at": "2025-05-02T18:11:16.952092"
   },
   {
     "name": "rowboatlabs/rowboat",
     "description": "AI-powered multi-agent builder",
-    "stars": "2410",
+    "stars": "2412",
     "weekly_stars": "1751",
     "language": "all",
     "url": "https://github.com/rowboatlabs/rowboat",
-    "fetched_at": "2025-05-02T17:09:21.318382"
+    "fetched_at": "2025-05-02T18:11:16.952439"
   },
   {
     "name": "hacksider/Deep-Live-Cam",
     "description": "real time face swap and one-click video deepfake with only a single image",
-    "stars": "56741",
+    "stars": "56808",
     "weekly_stars": "5176",
     "language": "all",
     "url": "https://github.com/hacksider/Deep-Live-Cam",
-    "fetched_at": "2025-05-02T17:09:21.318841"
+    "fetched_at": "2025-05-02T18:11:16.952867"
   },
   {
     "name": "simular-ai/Agent-S",
     "description": "Agent S: an open agentic framework that uses computers like a human",
-    "stars": "3853",
+    "stars": "3865",
     "weekly_stars": "1279",
     "language": "all",
     "url": "https://github.com/simular-ai/Agent-S",
-    "fetched_at": "2025-05-02T17:09:21.319164"
+    "fetched_at": "2025-05-02T18:11:16.953301"
   },
   {
     "name": "drawdb-io/drawdb",
     "description": "Free, simple, and intuitive online database diagram editor and SQL generator.",
-    "stars": "29459",
+    "stars": "29460",
     "weekly_stars": "1356",
     "language": "all",
     "url": "https://github.com/drawdb-io/drawdb",
-    "fetched_at": "2025-05-02T17:09:21.319453"
+    "fetched_at": "2025-05-02T18:11:16.954064"
   },
   {
     "name": "microsoft/generative-ai-for-beginners",
     "description": "21 Lessons, Get Started Building with Generative AI 🔗 https://microsoft.github.io/generative-ai-for-beginners/",
-    "stars": "81949",
+    "stars": "81953",
     "weekly_stars": "2608",
     "language": "all",
     "url": "https://github.com/microsoft/generative-ai-for-beginners",
-    "fetched_at": "2025-05-02T17:09:21.319759"
+    "fetched_at": "2025-05-02T18:11:16.954913"
   },
   {
     "name": "getzep/graphiti",
     "description": "Build Real-Time Knowledge Graphs for AI Agents",
-    "stars": "7761",
+    "stars": "7766",
     "weekly_stars": "3581",
     "language": "all",
     "url": "https://github.com/getzep/graphiti",
-    "fetched_at": "2025-05-02T17:09:21.320071"
+    "fetched_at": "2025-05-02T18:11:16.955809"
   },
   {
     "name": "kamranahmedse/developer-roadmap",
     "description": "Interactive roadmaps, guides and other educational content to help developers grow in their careers.",
-    "stars": "316979",
+    "stars": "316985",
     "weekly_stars": "1316",
     "language": "all",
     "url": "https://github.com/kamranahmedse/developer-roadmap",
-    "fetched_at": "2025-05-02T17:09:21.320396"
+    "fetched_at": "2025-05-02T18:11:16.956582"
   },
   {
     "name": "bytedance/UI-TARS",
     "description": "",
-    "stars": "5578",
+    "stars": "5581",
     "weekly_stars": "698",
     "language": "all",
     "url": "https://github.com/bytedance/UI-TARS",
-    "fetched_at": "2025-05-02T17:09:21.320646"
+    "fetched_at": "2025-05-02T18:11:16.957549"
   },
   {
     "name": "lapce/lapce",
     "description": "Lightning-fast and Powerful Code Editor written in Rust",
-    "stars": "35981",
+    "stars": "35982",
     "weekly_stars": "813",
     "language": "all",
     "url": "https://github.com/lapce/lapce",
-    "fetched_at": "2025-05-02T17:09:21.320940"
+    "fetched_at": "2025-05-02T18:11:16.958263"
   },
   {
     "name": "Stirling-Tools/Stirling-PDF",
     "description": "#1 Locally hosted web application that allows you to perform various operations on PDF files",
-    "stars": "57375",
+    "stars": "57381",
     "weekly_stars": "932",
     "language": "all",
     "url": "https://github.com/Stirling-Tools/Stirling-PDF",
-    "fetched_at": "2025-05-02T17:09:21.321263"
+    "fetched_at": "2025-05-02T18:11:16.958950"
   }
 ]
