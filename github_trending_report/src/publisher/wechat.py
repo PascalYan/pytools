@@ -62,7 +62,7 @@ class WeChatPublisher:
                 "content": content,
                 "thumb_media_id": result['media_id'],
                 "author": article_data.get("author", WECHAT_AUTHOR),
-                "digest": article_data.get("digest", "最新GitHub技术趋势分析")
+                "digest": article_data.get("digest")
             }]
             
             # 创建草稿

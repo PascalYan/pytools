@@ -36,7 +36,7 @@ DEEPSEEK_MODEL = "deepseek-chat"  # 使用的DeepSeek模型
 WECHAT_APP_ID = os.getenv("WECHAT_APP_ID")  # 微信公众号AppID
 WECHAT_APP_SECRET = os.getenv("WECHAT_APP_SECRET")  # 微信公众号AppSecret
 WECHAT_PUBLISH_MODE = "draft" # 发布模式: draft(草稿)/publish(正式)
-WECHAT_AUTHOR="码农AI助手"
+WECHAT_AUTHOR="每周趋势AI助手"
 WECHAT_THUMB_MEDIA_ID = os.getenv("WECHAT_THUMB_MEDIA_ID")  # 微信公众号封面素材ID，避免每次都要上传一个封面图片
 
 # Confluence配置

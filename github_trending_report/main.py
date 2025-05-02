@@ -36,7 +36,7 @@ def main():
     # 2. 生成所有需要的文章
     articles = {}
     from config.settings import ARTICLE_CHANNEL_MAPPING
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now().strftime("%Y%m%d")
     
     # 获取所有需要生成的文章类型（去重）
     required_article_types = set(ARTICLE_CHANNEL_MAPPING.keys())
@@ -83,9 +83,9 @@ def main():
                     # 发布到微微信公众号
                     wechat_publisher = WeChatPublisher()
                     wechat_data = {
-                        "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today})",
+                        "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
                         "content": articles[article_type],
-                        "digest": "每周精选GitHub热门项目技术分析"
+                        # "digest": "每周精选GitHub热门项目技术分析"，不传，微信自动截取54个字作为摘要介绍
                     }
                     wechat_publisher.publish_article(wechat_data)
                 elif channel == "confluence":
