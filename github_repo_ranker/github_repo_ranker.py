@@ -3,9 +3,14 @@ import concurrent.futures
 from github import Github
 import xlsxwriter
 from copy import deepcopy
+import os
+from dotenv import load_dotenv
+
+# 加载环境变量
+load_dotenv()
 
 # 配置 GitHub Token 和默认参数
-GITHUB_TOKEN = "ghp_dZnFw9jiSAdWoKknuSk00etJmOgYmBB1HC0XN"
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 # 动态搜索关键词，例如 "chatbot language:Python"
 DEFAULT_SEARCH_QUERY = "map client"  
 # 动态搜索结果数量

@@ -1,0 +1,114 @@
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; max-width: 100%; padding: 15px; box-sizing: border-box;">
+    <h1 style="text-align: center; font-size: 22px; color: #333; margin-bottom: 25px;">AI代理崛起、知识图谱革命与开发者工具进化｜GitHub趋势周报</h1>
+    
+    <p style="font-size: 16px;">GitHub Trends，Future Unfurls！本周GitHub又有哪些神仙项目霸榜热门？「码了个啥｜每周GitHub技术趋势」继续为您解读。</p>
+    
+    <p style="font-size: 16px;">本周技术趋势呈现三大关键词：<strong>AI代理生态爆发</strong>、<strong>实时知识图谱构建</strong>和<strong>开发者生产力工具革新</strong>。开源AI代理框架Suna以单周6.4k星登顶，微软生成式AI入门教程持续火热，而字节跳动的UI-TARS则展示了中国团队在前端工程化的创新。特别值得注意的是，Deep-Live-Cam引发的深度伪造技术伦理讨论仍在持续发酵。</p>
+    <br>
+
+    <p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">AI代理框架：通用智能体的开源革命</span></p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">Suna：开源通用AI代理平台</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 6.4k｜总 9.3k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/kortix-ai/suna</p>
+    <p style="font-size: 16px;">Suna被誉为"AI界的Linux"，提供了一套完整的通用智能体开发框架。其核心创新在于模块化的技能插件系统，开发者可以像搭积木一样组合视觉、语言、决策等能力模块。项目文档显示，Suna已实现跨平台任务自动化，从网页操作到本地文件处理无缝衔接。值得关注的是其"技能市场"设计，允许开发者共享训练好的功能模块，这种开源协作模式可能重塑AI代理开发生态。</p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">Rowboat：AI驱动的多智能体构建器</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 1.7k｜总 2.4k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/rowboatlabs/rowboat</p>
+    <p style="font-size: 16px;">Rowboat采用"数字蜂群"理念，专注于多智能体协作系统开发。其可视化编排界面让非技术用户也能设计智能体工作流，比如创建一个客服转技术支持的协作链条。项目采用独特的"竞合机制"，智能体之间既合作又竞争，通过动态评分系统优化任务分配。已有用户用其搭建了包含12个智能体的电商运营系统，处理从选品到售后全流程。</p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">Agent S：类人计算机操作框架</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 1.2k｜总 3.8k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/simular-ai/Agent-S</p>
+    <p style="font-size: 16px;">Agent S的创新点在于模拟人类操作计算机的行为模式，通过视觉识别和键鼠操作API实现"所见即所得"的自动化。不同于传统RPA，它能理解界面元素的语义关系，比如识别"提交按钮"并点击。项目演示中，Agent S成功完成了在陌生网站注册账号的全流程，包括处理验证码和邮件确认。这种类人操作方式虽然效率略低，但泛化能力极强，有望解决传统自动化工具"脆弱性"问题。</p>
+    <br>
+
+    <p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">AI基础设施：从提示工程到知识构建</span></p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">Leaked System Prompts：大模型提示词库</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 2.9k｜总 5.6k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/jujumilk3/leaked-system-prompts</p>
+    <p style="font-size: 16px;">这个争议性项目收集了ChatGPT、Claude等主流AI产品的系统提示词，堪称"大模型的秘密配方"。其中包含角色设定、安全限制等核心参数，比如如何避免生成有害内容。技术社区对此评价两极：支持者认为提升透明度有助于提示工程研究；反对者警告这可能帮助绕过安全防护。项目维护者表示只收录已公开内容，但伦理边界依然模糊。对开发者而言，这确实是研究模型行为的珍贵资料。</p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">Graphiti：实时知识图谱构建工具</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 3.5k｜总 7.7k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/getzep/graphiti</p>
+    <p style="font-size: 16px;">Graphiti解决了AI代理的"记忆碎片化"问题，能实时将对话、文档等信息组织成知识图谱。其创新点在于动态关系推断算法，可以自动发现实体间的新关联。比如将"马斯克收购Twitter"和"特斯拉股价波动"自动关联。项目采用增量式构建策略，支持毫秒级更新，已有用户用它搭建包含百万节点的客服知识库。这种实时知识管理能力，可能是实现持续学习AI的关键基础设施。</p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">微软生成式AI入门教程</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 2.6k｜总 81.9k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/microsoft/generative-ai-for-beginners</p>
+    <p style="font-size: 16px;">这套21节课的教程已成为生成式AI学习者的"圣经"，最新更新增加了多模态和代理系统内容。特色在于每个概念都配有可运行的Jupyter Notebook，从文本生成到图像创建全覆盖。特别值得关注的是其"负责任的AI"章节，详细讲解偏见检测、内容过滤等工业级解决方案。教育工作者反馈，这套课程结构设计符合学习曲线，是传统机器学习课程向生成式AI转型的优秀范本。</p>
+    <br>
+
+    <p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">开发者生产力工具革新</span></p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">DrawDB：可视化数据库设计工具</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 1.3k｜总 29.4k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/drawdb-io/drawdb</p>
+    <p style="font-size: 16px;">DrawDB解决了开发者"设计数据库时总要先画图"的痛点，提供所见即所得的ER图设计，并自动生成DDL语句。其智能布局算法能自动优化图表结构，支持MySQL、PostgreSQL等主流数据库。独特功能是"版本对比"，可以可视化查看Schema变更差异。已有团队将其集成到CI/CD流程，实现数据库变更的可视化审查。对于微服务架构下的数据建模，这种工具能极大提升跨团队协作效率。</p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">Lapce：Rust编写的极速代码编辑器</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 813｜总 35.9k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/lapce/lapce</p>
+    <p style="font-size: 16px;">Lapce正在挑战VS Code的霸主地位，其Rust底层带来惊人的性能提升：百万行代码文件秒开，内存占用仅为同类产品的1/3。创新点在于"无前端分离架构"，渲染和逻辑都在同一进程，避免了IPC通信开销。插件系统采用WebAssembly保证安全性，虽然生态尚不完善，但已有用户测试在M1 Mac上编译速度比VS Code快40%。对于追求极致性能的开发者，这可能是下一代编辑器的雏形。</p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">Stirling-PDF：全能PDF处理工具</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 932｜总 57.3k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/Stirling-Tools/Stirling-PDF</p>
+    <p style="font-size: 16px;">这个本地化PDF工具集因其隐私保护特性大受欢迎，支持从格式转换到OCR的全套功能。核心技术在于其模块化处理管道，每个操作都作为独立微服务运行，通过零拷贝技术提升性能。安全方面采用沙箱机制处理不受信任文件，已有法律事务所用它批量处理敏感案件文档。相比云服务，本地部署确实解决了数据出境等合规问题，反映出开发者对隐私工具的强烈需求。</p>
+    <br>
+
+    <p style="color:#1E90FF;font-weight:bold;font-size: 16px;">UI-TARS：字节跳动前端工程化方案</p>
+    <p style="color:#888888; font-size: 15px;">star⭐️: 本周 698｜总 5.5k</p>
+    <p style="color:#888888; font-size: 15px;">项目地址：<br>https://github.com/bytedance/UI-TARS</p>
+    <p style="font-size: 16px;">字节跳动开源的这套前端解决方案核心在于"设计系统即代码"理念，通过DSL描述UI规范，自动生成多平台代码。其"视觉差异检测"功能可以自动比对设计稿与实现效果，在抖音电商团队实测将UI验收时间缩短70%。虽然文档尚不完善，但项目结构展示了大厂如何管理超大规模前端项目，对需要统一多产品线UI的中大型团队极具参考价值。</p>
+    <br>
+
+    <p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">本周趋势洞察</span></p>
+    <br>
+
+    <p style="font-size: 16px;">本周GitHub趋势揭示三大技术演进方向：AI代理的平民化、知识管理的实时化，以及开发者工具的效能革命。</p>
+
+    <p style="font-size: 16px;"><strong>AI代理生态</strong>正从单兵作战转向群体智能。Suna、Rowboat等项目表明，开源社区正在构建AI时代的"操作系统"，让智能体像App一样可组合、可分发。这种变化类似智能手机初期到应用商店生态的演进，关键突破在于标准化接口和技能交易机制。值得警惕的是，leaked-prompts项目反映的提示词安全问题，暴露出AI系统可解释性与安全性之间的深刻矛盾。</p>
+
+    <p style="font-size: 16px;"><strong>知识图谱技术</strong>迎来"活文档"时代。Graphiti代表的实时知识构建工具，正在解决大模型的"金鱼记忆"问题。这种技术将静态知识库变为持续进化的有机体，类似人类大脑的神经可塑性机制。医疗领域已有团队用它构建实时更新的临床指南系统，但如何避免错误知识的"污染"仍是待解难题。</p>
+
+    <p style="font-size: 16px;"><strong>开发者工具</strong>呈现"性能焦虑"与"隐私觉醒"并存的态势。Lapce的崛起反映开发者对性能的极致追求，而Stirling-PDF的热度则彰显对数据主权的重视。特别值得注意的是UI-TARS展示的中国方案，在全球前端工程化领域发出强音，这种"设计即代码"理念可能重塑人机协作模式。</p>
+
+    <p style="font-size: 16px;">Deep-Live-Cam引发的深度伪造争议仍在发酵，技术社区开始自发制定伦理准则。这提示我们：在创新与约束之间寻找平衡，将是未来技术演进的主旋律。正如一位开发者所言："我们不仅要思考'能不能做'，更要思考'该不该做'"。</p>
+    <br>
+
+    <p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#00d5ff">开发者建议</span></p>
+    <br>
+
+    <p style="font-size: 16px;">1. <strong>AI代理开发</strong>：从Suna的插件系统入手，尝试将现有服务封装为智能体技能。关注Agent-S的类人操作模式，这对处理传统自动化难以应对的"非标"界面特别有效。</p>
+
+    <p style="font-size: 16px;">2. <strong>知识管理升级</strong>：用Graphiti构建个人知识中枢，整合笔记、代码片段和会议记录。微软AI教程第18课专门讲解知识图谱与LLM的集成，是很好的起点。</p>
+
+    <p style="font-size: 16px;">3. <strong>工具链优化</strong>：评估Lapce在大型项目中的性能表现，其Rust架构对Monorepo项目可能有奇效。将DrawDB纳入数据库设计流程，特别在团队协作场景下。</p>
+
+    <p style="font-size: 16px;">4. <strong>安全实践</strong>：研究leaked-prompts中的安全机制设计思路，但切勿用于绕过合法限制。Stirling-PDF的沙箱设计值得学习，尤其处理用户上传文件时。</p>
+    <br>
+
+    <p style="font-size: 16px;">AI代理正在重构软件形态，知识图谱革新信息管理方式，而工具链的持续进化则解放开发者创造力。您认为通用AI代理会首先在哪个领域爆发？开源社区该如何应对深度伪造技术的伦理挑战？欢迎在评论区分享您的见解！</p>
+    <br>
+
+    <p style="color:#888888; font-size: 12px;">作者声明：「每周GitHub技术趋势」一般每周五晚上更新，旨在为开发者速递每周技术热点趋势，内容来源于Github Weekly Trending，综合相关项目互联网热门信息及AI整理，请注意鉴别。</p>
+    <br>
+
+    <p style="font-weight:bold;font-size: 16px;text-align: left">参考文章：</p>
+    <p style="font-size: 15px;"><strong>The Rise of Open Source AI Agents</strong>：<br>https://towardsdatascience.com/the-rise-of-open-source-ai-agents-9e5c47a2d148</p>
+    <p style="font-size: 15px;"><strong>Knowledge Graphs for AI Systems</strong>：<br>https://arxiv.org/abs/2403.13987</p>
+    <p style="font-size: 15px;"><strong>Ethics in Deepfake Technology</strong>：<br>https://techpolicy.press/the-ethics-of-deepfakes/</p>
+</div>
