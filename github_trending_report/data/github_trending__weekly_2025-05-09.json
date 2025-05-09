@@ -1,0 +1,173 @@
+[
+  {
+    "name": "hacksider/Deep-Live-Cam",
+    "description": "real time face swap and one-click video deepfake with only a single image",
+    "stars": "65401",
+    "weekly_stars": "9615",
+    "language": "all",
+    "url": "https://github.com/hacksider/Deep-Live-Cam",
+    "fetched_at": "2025-05-09T23:06:22.888894"
+  },
+  {
+    "name": "LadybirdBrowser/ladybird",
+    "description": "Truly independent web browser",
+    "stars": "41545",
+    "weekly_stars": "3213",
+    "language": "all",
+    "url": "https://github.com/LadybirdBrowser/ladybird",
+    "fetched_at": "2025-05-09T23:06:22.889172"
+  },
+  {
+    "name": "MODSetter/SurfSense",
+    "description": "Open Source Alternative to NotebookLM / Perplexity / Glean, connected to external sources such as search engines (Tavily, Linkup), Slack, Linear, Notion, YouTube, GitHub and more.",
+    "stars": "3363",
+    "weekly_stars": "1232",
+    "language": "all",
+    "url": "https://github.com/MODSetter/SurfSense",
+    "fetched_at": "2025-05-09T23:06:22.889545"
+  },
+  {
+    "name": "aipotheosis-labs/aci",
+    "description": "ACI.dev is the open source platform that connects your AI agents to 600+ tool integrations with multi-tenant auth, granular permissions, and access through direct function calling or a unified MCP server.",
+    "stars": "3073",
+    "weekly_stars": "2249",
+    "language": "all",
+    "url": "https://github.com/aipotheosis-labs/aci",
+    "fetched_at": "2025-05-09T23:06:22.889854"
+  },
+  {
+    "name": "juanfont/headscale",
+    "description": "An open source, self-hosted implementation of the Tailscale control server",
+    "stars": "28236",
+    "weekly_stars": "672",
+    "language": "all",
+    "url": "https://github.com/juanfont/headscale",
+    "fetched_at": "2025-05-09T23:06:22.890113"
+  },
+  {
+    "name": "ranaroussi/yfinance",
+    "description": "Download market data from Yahoo! Finance's API",
+    "stars": "17190",
+    "weekly_stars": "275",
+    "language": "all",
+    "url": "https://github.com/ranaroussi/yfinance",
+    "fetched_at": "2025-05-09T23:06:22.890371"
+  },
+  {
+    "name": "Lightricks/LTX-Video",
+    "description": "Official repository for LTX-Video",
+    "stars": "4177",
+    "weekly_stars": "414",
+    "language": "all",
+    "url": "https://github.com/Lightricks/LTX-Video",
+    "fetched_at": "2025-05-09T23:06:22.890760"
+  },
+  {
+    "name": "CapSoftware/Cap",
+    "description": "Open source Loom alternative. Beautiful, shareable screen recordings.",
+    "stars": "9306",
+    "weekly_stars": "1277",
+    "language": "all",
+    "url": "https://github.com/CapSoftware/Cap",
+    "fetched_at": "2025-05-09T23:06:22.891031"
+  },
+  {
+    "name": "commaai/openpilot",
+    "description": "openpilot is an operating system for robotics. Currently, it upgrades the driver assistance system on 300+ supported cars.",
+    "stars": "53695",
+    "weekly_stars": "443",
+    "language": "all",
+    "url": "https://github.com/commaai/openpilot",
+    "fetched_at": "2025-05-09T23:06:22.891291"
+  },
+  {
+    "name": "modular/modular",
+    "description": "The Modular Platform (includes MAX & Mojo)",
+    "stars": "23990",
+    "weekly_stars": "72",
+    "language": "all",
+    "url": "https://github.com/modular/modular",
+    "fetched_at": "2025-05-09T23:06:22.891544"
+  },
+  {
+    "name": "ruanyf/weekly",
+    "description": "科技爱好者周刊，每周五发布",
+    "stars": "60602",
+    "weekly_stars": "5118",
+    "language": "all",
+    "url": "https://github.com/ruanyf/weekly",
+    "fetched_at": "2025-05-09T23:06:22.891874"
+  },
+  {
+    "name": "htr-tech/zphisher",
+    "description": "An automated phishing tool with 30+ templates. This Tool is made for educational purpose only ! Author will not be responsible for any misuse of this toolkit !",
+    "stars": "13134",
+    "weekly_stars": "537",
+    "language": "all",
+    "url": "https://github.com/htr-tech/zphisher",
+    "fetched_at": "2025-05-09T23:06:22.892163"
+  },
+  {
+    "name": "QwenLM/Qwen-Agent",
+    "description": "Agent framework and applications built upon Qwen>=3.0, featuring Function Calling, MCP, Code Interpreter, RAG, Chrome extension, etc.",
+    "stars": "8243",
+    "weekly_stars": "675",
+    "language": "all",
+    "url": "https://github.com/QwenLM/Qwen-Agent",
+    "fetched_at": "2025-05-09T23:06:22.892444"
+  },
+  {
+    "name": "daytonaio/daytona",
+    "description": "Daytona is a Secure and Elastic Infrastructure for Running AI-Generated Code",
+    "stars": "20010",
+    "weekly_stars": "2522",
+    "language": "all",
+    "url": "https://github.com/daytonaio/daytona",
+    "fetched_at": "2025-05-09T23:06:22.892725"
+  },
+  {
+    "name": "iperov/DeepFaceLab",
+    "description": "DeepFaceLab is the leading software for creating deepfakes.",
+    "stars": "17756",
+    "weekly_stars": "179",
+    "language": "all",
+    "url": "https://github.com/iperov/DeepFaceLab",
+    "fetched_at": "2025-05-09T23:06:22.893028"
+  },
+  {
+    "name": "glanceapp/glance",
+    "description": "A self-hosted dashboard that puts all your feeds in one place",
+    "stars": "23904",
+    "weekly_stars": "862",
+    "language": "all",
+    "url": "https://github.com/glanceapp/glance",
+    "fetched_at": "2025-05-09T23:06:22.893352"
+  },
+  {
+    "name": "expo/expo",
+    "description": "An open-source framework for making universal native apps with React. Expo runs on Android, iOS, and the web.",
+    "stars": "39997",
+    "weekly_stars": "462",
+    "language": "all",
+    "url": "https://github.com/expo/expo",
+    "fetched_at": "2025-05-09T23:06:22.893605"
+  },
+  {
+    "name": "donnemartin/system-design-primer",
+    "description": "Learn how to design large-scale systems. Prep for the system design interview. Includes Anki flashcards.",
+    "stars": "298758",
+    "weekly_stars": "1148",
+    "language": "all",
+    "url": "https://github.com/donnemartin/system-design-primer",
+    "fetched_at": "2025-05-09T23:06:22.893858"
+  },
+  {
+    "name": "GoogleCloudPlatform/kubectl-ai",
+    "description": "AI powered Kubernetes Assistant",
+    "stars": "4281",
+    "weekly_stars": "3633",
+    "language": "all",
+    "url": "https://github.com/GoogleCloudPlatform/kubectl-ai",
+    "fetched_at": "2025-05-09T23:06:22.894177"
+  }
+]
