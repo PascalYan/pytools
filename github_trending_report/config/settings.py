@@ -43,10 +43,13 @@ WECHAT_THUMB_MEDIA_ID = os.getenv("WECHAT_THUMB_MEDIA_ID")  # 微信公众号封
 CONFLUENCE_URL = os.getenv("CONFLUENCE_URL")  # Confluence实例URL
 CONFLUENCE_USERNAME = os.getenv("CONFLUENCE_USERNAME")  # Confluence用户名
 CONFLUENCE_API_TOKEN = os.getenv("CONFLUENCE_API_TOKEN")  # Confluence API令牌
+CONFLUENCE_SPACE_KEY = os.getenv("CONFLUENCE_SPACE_KEY")  # Confluence空间键
+CONFLUENCE_PARENT_PAGE_ID = os.getenv("CONFLUENCE_PARENT_PAGE_ID")  # Confluence父页面ID
 
 # 文章类型与发布渠道映射关系
 ARTICLE_CHANNEL_MAPPING = {
     # "NEWS_REPORT_TEMPLATE": ["wechat","confluence"],  # 新闻报告模板发布渠道
     # "TECH_ANALYSIS_TEMPLATE": ["confluence"]  # 技术分析模板发布渠道
-    "WEEKLY_TREADING_WECHAT": ["wechat"]  # 技术分析模板发布渠道
+    # "WEEKLY_TREADING_WECHAT": ["confluence"]  # 技术分析模板发布渠道
+   "WEEKLY_TREADING_CONFLUENCE":["confluence"]  # 技术分析模板发布渠道
 }

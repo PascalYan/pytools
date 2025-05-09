@@ -2,6 +2,7 @@ from atlassian import Confluence
 from typing import Dict
 import logging
 from config.settings import CONFLUENCE_URL, CONFLUENCE_USERNAME, CONFLUENCE_API_TOKEN
+from config.settings import CONFLUENCE_SPACE_KEY, CONFLUENCE_PARENT_PAGE_ID
 
 class ConfluencePublisher:
     """
@@ -12,10 +13,10 @@ class ConfluencePublisher:
         self.client = Confluence(
             url=CONFLUENCE_URL,
             username=CONFLUENCE_USERNAME,
-            password=CONFLUENCE_API_TOKEN
+            token=CONFLUENCE_API_TOKEN
         )
     
-    def publish_article(self, article_data: Dict, space_key: str, parent_page_id: str = None) -> bool:
+    def publish_article(self, article_data: Dict, space_key: str = CONFLUENCE_SPACE_KEY, parent_page_id: str = CONFLUENCE_PARENT_PAGE_ID) -> bool:
         """
         发布文章到Confluence
         

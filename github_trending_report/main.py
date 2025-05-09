@@ -92,10 +92,10 @@ def main():
                     # 发布到Confluence
                     confluence_publisher = ConfluencePublisher()
                     confluence_data = {
-                        "title": f"GitHub技术趋势分析({today})",
+                        "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
                         "content": articles[article_prompt_template_name]
                     }
-                    confluence_publisher.publish_article(confluence_data, space_key="TECH")
+                    confluence_publisher.publish_article(confluence_data)
         
             except Exception as e:
                 logger.error(f"发布{article_prompt_template_name}到{channel}失败: {str(e)}")

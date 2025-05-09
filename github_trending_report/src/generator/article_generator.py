@@ -9,11 +9,6 @@ class ArticleGenerator:
     """
     技术文章生成器，根据提示词模板动态生成文章
     """
-
-class ArticleGenerator:
-    """
-    技术文章生成器，根据提示词模板动态生成文章
-    """
     
     def __init__(self):
         self.logger = logging.getLogger(__name__)
