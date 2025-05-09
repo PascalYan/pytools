@@ -50,6 +50,6 @@ CONFLUENCE_PARENT_PAGE_ID = os.getenv("CONFLUENCE_PARENT_PAGE_ID")  # Confluence
 ARTICLE_CHANNEL_MAPPING = {
     # "NEWS_REPORT_TEMPLATE": ["wechat","confluence"],  # 新闻报告模板发布渠道
     # "TECH_ANALYSIS_TEMPLATE": ["confluence"]  # 技术分析模板发布渠道
-    # "WEEKLY_TREADING_WECHAT": ["confluence"]  # 技术分析模板发布渠道
-   "WEEKLY_TREADING_CONFLUENCE":["confluence"]  # 技术分析模板发布渠道
+    "WEEKLY_TREADING_WECHAT": ["wechat"]  # 技术分析模板发布渠道
+#    "WEEKLY_TREADING_CONFLUENCE":["confluence"]  # 技术分析模板发布渠道
 }
