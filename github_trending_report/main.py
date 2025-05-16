@@ -106,6 +106,10 @@ def main():
                     enterprise_wechat_publisher = WeComPublisher()
                     # ！！！TODO这里需要自行修改获取其他渠道的文章地址, 这里使用confluence的地址作为企业微信的文章地址
                     article_link_url = article_urls[article_prompt_template_name]["confluence"]
+                    if not article_link_url or article_link_url == "#":
+                        logger.warning(f"文章{article_prompt_template_name}在Confluence平台未发布或无法获取文章链接，跳过企业微信发布，请确认后再发布")
+                        continue
+                    # 生成企业微信卡片消息内容
                     enterprise_wechat_data = {
                         "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
                         "description":  articles[article_prompt_template_name],
