@@ -26,10 +26,13 @@ class ConfluencePublisher:
         :return: 发布是否成功
         """
         try:
+            # 为文章内容添加Markdown宏支持
+            markdown_body = f'<ac:structured-macro ac:name="markdown"><ac:plain-text-body><![CDATA[{article_data.get("content", "")}]]></ac:plain-text-body></ac:structured-macro>';
+            
             result = self.client.create_page(
                 space=space_key,
                 title=article_data.get("title", "GitHub技术趋势报告"),
-                body=article_data.get("content", ""),
+                body=markdown_body,
                 parent_id=parent_page_id
             )
             

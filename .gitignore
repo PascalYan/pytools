@@ -22,3 +22,8 @@ github_trending_report/data/20250509_weekly_WEEKLY_TREADING_WECHAT1.text
 github_trending_report/data/20250509_weekly_WEEKLY_TREADING_WECHAT2.text
 github_trending_report/data/20250509_weekly_WEEKLY_TREADING_WECHAT3.text
 github_trending_report/data/20250509_weekly_WEEKLY_TREADING_WECHAT4.text
+data
+github_trending_report/src/crawler/__pycache__/
+github_trending_report/src/generator/__pycache__/
+github_trending_report/src/publisher/__pycache__/
+

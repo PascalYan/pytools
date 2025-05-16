@@ -4,6 +4,7 @@ from langchain.chains import LLMChain
 from langchain_openai import ChatOpenAI
 from config.settings import DEEPSEEK_API_KEY, DEEPSEEK_MODEL, DEEPSEEK_API_URL
 import config.prompts as prompts
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 class ArticleGenerator:
     """
@@ -16,7 +17,9 @@ class ArticleGenerator:
             openai_api_key=DEEPSEEK_API_KEY,
             model_name=DEEPSEEK_MODEL,
             temperature=0.7,
-            openai_api_base=DEEPSEEK_API_URL
+            openai_api_base=DEEPSEEK_API_URL,
+            streaming=True,
+            callbacks=[StreamingStdOutCallbackHandler()]
         )
         self.logger.debug("ArticleGenerator初始化完成")
     
@@ -44,7 +47,11 @@ class ArticleGenerator:
             
         try:
             self.logger.info(f"使用LLM生成文章内容，模板: {template_name}")
-            chain = LLMChain(llm=self.llm, prompt=template)
+            class LoggingCallbackHandler(StreamingStdOutCallbackHandler):
+                def on_llm_new_token(self, token: str, **kwargs) -> None:
+                    self.logger.info(f"接收到流式回答新令牌: {token}")
+            
+            chain = LLMChain(llm=self.llm, prompt=template, callbacks=[LoggingCallbackHandler()])
             content = chain.run(trending_projects=trending_projects)
             
             if not content:
