@@ -32,6 +32,7 @@ class WeComPublisher:
                 title = article_data.get("title", "无标题文章")
                 description = article_data.get("description", "暂无文章简介")
                 article_url = article_data.get("url", "#")
+                pic_url = article_data.get("pic_url", "#")
                 
                 payload = {
                     "msgtype": "news",
@@ -41,7 +42,7 @@ class WeComPublisher:
                                 "title": title,
                                 "description": description,
                                 "url": article_url,
-                                "picurl": ""
+                                "picurl": pic_url
                             }
                         ]
                     }

@@ -40,7 +40,7 @@ WEEKLY_TREADING_WECHAT = PromptTemplate(
    - <br>末尾空一行
 
 2. 【项目分类介绍】
-   - 将项目归类为3-5个高度抽象的类别(不可归类的可以统一归到"其它上榜项目")
+   - 将项目归类为3-5个高度抽象的类别(不可归类的可以统一归到"其它上榜项目"，每个项目也都需要介绍)
    - 文章内容应当包含每周趋势项目列表所有项目
    - 每个类别标题<p style="color:#ffffff;font-weight:bold;font-size: 17px;text-align: center"><span style="background-color:#3daad6">项目名称：（中文）一句话亮点</span></p>
    - <br>每个类别标题后空一行
@@ -127,7 +127,7 @@ WEEKLY_TREADING_CONFLUENCE = PromptTemplate(
 
       **二、项目解读**
 
-      **（一）项目分类标题 **，用（中文数字）作为序号，将本周项目分类为3-5个高度抽象的类别(不可归类的可以统一归到"其它上榜项目")
+      **（一）项目分类标题 **，用（中文数字）作为序号，将本周项目分类为3-5个高度抽象的类别(不可归类的可以统一归到"其它上榜项目"，每个项目也都需要介绍)
       每个项目按如下模板编写：
 
        ▌ **项目名称：一句话亮点**  
@@ -170,4 +170,18 @@ WEEKLY_TREADING_CONFLUENCE = PromptTemplate(
    """
 )
 
-
+# 提取confluence文章摘要
+WEEKLY_TREADING_CONFLUENCE_ABSTRACT  = PromptTemplate(
+    input_variables=["artical_content"],
+    template="""
+    你是一位拥有世界级技术视野的资深技术专家，专注于为中国开发者解读全球技术趋势，旨在帮助技术部门关注全球技术发展趋势。
+    请根据之前生成的文章，总结提取企业微信群机器人推送文章的摘要描述，之前生成的文章为：
+                \n{artical_content}\n\n
+   【固定开头】"本周GitHub技术趋势速递：",然后生成摘要描述，字数控制在100字以内，突出文章的核心内容，引导读者快速了解文章内容。
+    输出要求：
+    - 输出纯文本格式（无样式、无markdown等），直接api调用企业发布群机器人卡片消息
+    - 输出摘要描述，字数控制在100字以内
+    - 摘要描述要突出文章的核心内容，引导读者快速了解文章内容
+                
+   """
+)

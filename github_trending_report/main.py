@@ -58,7 +58,7 @@ def main():
             
         # 生成新文章
         logger.info(f"生成文章{article_prompt_template_name}...")
-        articles.update(generator.generate_article(crawler_content, article_prompt_template_name))
+        articles.update(generator.generate_article(article_prompt_template_name, trending_projects=crawler_content))
         
         # 保存生成的文章
         logger.info(f"生成文章{article_prompt_template_name}生成完成，保存文章...")
@@ -110,6 +110,7 @@ def main():
                         "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
                         "description":  articles[article_prompt_template_name],
                         "url": article_link_url,
+                        "pic_url": "https://p3-flow-imagex-sign.byteimg.com/ocean-cloud-tos/image_skill/3a16d434-f260-43f6-b0e1-c52d444befa7_1747378622636380176_origin~tplv-a9rns2rl98-image-dark-watermark.png?rk3s=b14c611d&x-expires=1778914622&x-signature=ezzVk2TSTjr%2FSrfx4wTuP9JoWME%3D"
                     }
                     enterprise_wechat_publisher.publish_article(enterprise_wechat_data)
                     article_urls[article_prompt_template_name][channel] = "#" # 企业微信没用文章地址，这里使用#代替
