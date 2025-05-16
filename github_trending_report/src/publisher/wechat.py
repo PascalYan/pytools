@@ -23,12 +23,12 @@ class WeChatPublisher:
         """
         return markdown.markdown(markdown_content)
         
-    def publish_article(self, article_data: Dict) -> bool:
+    def publish_article(self, article_data: Dict) -> str:
         """
         发布文章到微信公众号
         
         :param article_data: 文章数据，包含标题、内容、封面图等
-        :return: 发布是否成功
+        :return: 文章发布后的URL
         """
         try:
             # 处理封面素材
@@ -70,11 +70,14 @@ class WeChatPublisher:
             
             # 如果是发布模式而非草稿，则发布草稿
             if WECHAT_PUBLISH_MODE != "draft":
-                self.client.freepublish.submit(result['media_id'])
+                publish_result = self.client.freepublish.submit(result['media_id'])
+                article_url = f"https://mp.weixin.qq.com/s?__biz={self.client.appid}&mid={publish_result['article_id']}"  # 示例URL，需根据实际情况调整
+            else:
+                article_url = "#"  # 草稿模式无公开URL
             
-            logging.info(f"微信公众号文章发布成功: {json.dumps(result)}")
-            return True
+            logging.info(f"微信公众号文章发布成功: {json.dumps(result)}, 文章URL: {article_url}")
+            return article_url
             
         except Exception as e:
             logging.error(f"微信公众号文章发布失败: {e}")
-            return False
+            return "#"

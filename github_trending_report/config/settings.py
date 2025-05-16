@@ -39,6 +39,9 @@ WECHAT_PUBLISH_MODE = "draft" # 发布模式: draft(草稿)/publish(正式)
 WECHAT_AUTHOR="每周趋势AI助手"
 WECHAT_THUMB_MEDIA_ID = os.getenv("WECHAT_THUMB_MEDIA_ID")  # 微信公众号封面素材ID，避免每次都要上传一个封面图片
 
+# 企业微信配置
+WECOM_WEBHOOK_URLS = os.getenv('WECOM_WEBHOOK_URLS', '').split(',')  # 企业微信机器人Webhook URL列表
+
 # Confluence配置
 CONFLUENCE_URL = os.getenv("CONFLUENCE_URL")  # Confluence实例URL
 CONFLUENCE_USERNAME = os.getenv("CONFLUENCE_USERNAME")  # Confluence用户名
@@ -51,5 +54,5 @@ ARTICLE_CHANNEL_MAPPING = {
     # "NEWS_REPORT_TEMPLATE": ["wechat","confluence"],  # 新闻报告模板发布渠道
     # "TECH_ANALYSIS_TEMPLATE": ["confluence"]  # 技术分析模板发布渠道
     # "WEEKLY_TREADING_WECHAT": ["wechat"]  # 技术分析模板发布渠道
-   "WEEKLY_TREADING_CONFLUENCE":["confluence"]  # 技术分析模板发布渠道
+   "WEEKLY_TREADING_CONFLUENCE":["confluence", "wecom"]  # 技术分析模板发布渠道
 }

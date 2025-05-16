@@ -7,6 +7,7 @@ from src.crawler.github_trending import fetch_trending_repos
 from src.generator.article_generator import ArticleGenerator
 from src.publisher.wechat import WeChatPublisher
 from src.publisher.confluence import ConfluencePublisher
+from src.publisher.wecom import WeComPublisher
 from config.settings import DATA_DIR
 
 # 配置日志
@@ -66,28 +67,31 @@ def main():
     
     # 3. 发布文章
     logger.info("所有文章生成完成，正在发布文章到各平台...")
+    article_urls = {}
     
     # 按文章类型和渠道发布
-    for article_prompt_template_name, channels in ARTICLE_CHANNEL_MAPPING.items():
+    for article_prompt_template_name, channels in ARTICLE_CHANNEL_MAPPING.items(): 
         if article_prompt_template_name not in articles:
             logger.warning(f"文章类型{article_prompt_template_name}未生成，跳过发布")
             continue
             
         logger.info(f"开始发布{article_prompt_template_name}到{', '.join(channels)}...")
+        article_urls[article_prompt_template_name] = {}
         
         for channel in channels:
-            logger.info(f"正在发布{article_prompt_template_name}文章{channel}平台...")
-               
+            logger.info(f"正在发布{article_prompt_template_name}文章到{channel}平台...")
+            
             try:
                 if channel == "wechat":
-                    # 发布到微微信公众号
+                    # 发布到微信公众号
                     wechat_publisher = WeChatPublisher()
                     wechat_data = {
                         "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
                         "content": articles[article_prompt_template_name],
                         # "digest": "每周精选GitHub热门项目技术分析"，不传，微信自动截取54个字作为摘要介绍
                     }
-                    wechat_publisher.publish_article(wechat_data)
+                    article_url = wechat_publisher.publish_article(wechat_data)
+                    article_urls[article_prompt_template_name][channel] = article_url
                 elif channel == "confluence":
                     # 发布到Confluence
                     confluence_publisher = ConfluencePublisher()
@@ -95,11 +99,25 @@ def main():
                         "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
                         "content": articles[article_prompt_template_name]
                     }
-                    confluence_publisher.publish_article(confluence_data)
-        
+                    article_url = confluence_publisher.publish_article(confluence_data)
+                    article_urls[article_prompt_template_name][channel] = article_url
+                elif channel == "wecom":
+                    # 发布到企业微信
+                    enterprise_wechat_publisher = WeComPublisher()
+                    # ！！！TODO这里需要自行修改获取其他渠道的文章地址, 这里使用confluence的地址作为企业微信的文章地址
+                    article_link_url = article_urls[article_prompt_template_name]["confluence"]
+                    enterprise_wechat_data = {
+                        "title": f"每{'日' if GITHUB_TRENDING_SINCE == 'daily' else '周' if GITHUB_TRENDING_SINCE == 'weekly' else '月'}GitHub技术趋势({today}期)",
+                        "description":  articles[article_prompt_template_name],
+                        "url": article_link_url,
+                    }
+                    enterprise_wechat_publisher.publish_article(enterprise_wechat_data)
+                    article_urls[article_prompt_template_name][channel] = "#" # 企业微信没用文章地址，这里使用#代替
+
             except Exception as e:
                 logger.error(f"发布{article_prompt_template_name}到{channel}失败: {str(e)}")
-    
+                article_urls[article_prompt_template_name][channel] = "#"
+
     logger.info("GitHub技术趋势报告生成流程完成!")
 
 

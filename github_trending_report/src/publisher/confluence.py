@@ -16,14 +16,14 @@ class ConfluencePublisher:
             token=CONFLUENCE_API_TOKEN
         )
     
-    def publish_article(self, article_data: Dict, space_key: str = CONFLUENCE_SPACE_KEY, parent_page_id: str = CONFLUENCE_PARENT_PAGE_ID) -> bool:
+    def publish_article(self, article_data: Dict, space_key: str = CONFLUENCE_SPACE_KEY, parent_page_id: str = CONFLUENCE_PARENT_PAGE_ID) -> str:
         """
         发布文章到Confluence
         
         :param article_data: 文章数据，包含标题、内容等
         :param space_key: Confluence空间key
         :param parent_page_id: 父页面ID(可选)
-        :return: 发布是否成功
+        :return: 文章发布后的URL
         """
         try:
             # 为文章内容添加Markdown宏支持
@@ -36,9 +36,10 @@ class ConfluencePublisher:
                 parent_id=parent_page_id
             )
             
-            logging.info(f"Confluence文章发布成功，页面ID: {result['id']}")
-            return True
+            page_url = f"{self.client.url}/pages/viewpage.action?pageId={result['id']}"
+            logging.info(f"Confluence文章发布成功，页面ID: {result['id']}, 文章URL: {page_url}")
+            return page_url
             
         except Exception as e:
             logging.error(f"Confluence文章发布失败: {e}")
-            return False
+            return "#"

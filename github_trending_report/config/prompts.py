@@ -120,7 +120,7 @@ WEEKLY_TREADING_CONFLUENCE = PromptTemplate(
       文章要求-内容结构,严格按以下顺序和markdown组织内容：
 
       **一、本周趋势概览**
-     【固定开场白】：技术不只眼前的代码，也要在前沿技术趋势中汲取灵感。[每周GitHub技术趋势]继续为您速递本周的热点项目 。
+     【固定开场白】：技术不止眼前的代码，更有GitHub每周的前沿创意！ [每周GitHub技术趋势] 继续为您速递本周的热点项目和技术趋势 。
       [用1-2段总结本周核心内容，引导阅读，提炼几个本周关键词]
 
       ---
@@ -148,7 +148,7 @@ WEEKLY_TREADING_CONFLUENCE = PromptTemplate(
       ---
 
       **五、思考问题**
-       设置3-5个开放式问题引导讨论，引爆话题，引导交流
+      设置3-5个开放式问题引导讨论，引爆话题，引导交流
 
       ---
 
@@ -161,9 +161,11 @@ WEEKLY_TREADING_CONFLUENCE = PromptTemplate(
 
 
       输出要求，请严格按照以下格式：
-      - 使用标准Markdown格式
-      - 输出去掉前后的"markdown"等字符，结果可直接用于Confluence api发布，符合api要求
+      - 使用标准Markdown格式，用于confluence markdown宏发表
+      - 输出去掉前后的"markdown"、双引号等字符，结果可直接用于Confluence api发布，符合api要求
+      - 关键字加粗标黑
       - 输出3000~5000字左右
+
 
    """
 )
