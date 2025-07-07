@@ -55,6 +55,8 @@ class WeComPublisher:
                 if result.get("errcode") != 0:
                     failed_urls.append(webhook_url)
                     logging.error(f"企业微信消息推送失败，URL: {webhook_url}, 错误信息: {result.get('errmsg')}")
+                else:
+                    logging.info(f"企业微信消息推送成功，URL: {webhook_url}")
             except Exception as e:
                 failed_urls.append(webhook_url)
                 logging.error(f"企业微信消息推送失败，URL: {webhook_url}, 错误信息: {str(e)}")

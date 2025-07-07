@@ -154,9 +154,9 @@ WEEKLY_TREADING_CONFLUENCE = PromptTemplate(
 
       **六、 扩展阅读**
       设置本篇文章相关的讨论、学习、参考文章列表，格式如下：
-      - [相关文章标题](文章URL)
+      - [相关文章标题](文章URL，需要准确的地址，没有就不要了)
 
-      【固定声明】*声明*：每周更新，内容基于Github Trending和AI整理，辅助大家关注全球开源技术发展，请注意自行鉴别和选择感兴趣的进一步学习。
+      【固定声明】*声明*：每周更新，内容基于[Github Trending](https://github.com/trending?since=weekly)和AI整理，辅助大家关注全球开源技术发展，请注意自行鉴别和选择感兴趣的进一步学习。
 
 
 
